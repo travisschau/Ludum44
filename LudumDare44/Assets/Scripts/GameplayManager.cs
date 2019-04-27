@@ -40,6 +40,12 @@ public class GameplayManager : MonoBehaviour
         {
             civilian.Initialize();
         }
+        
+        foreach (Corpse c in corpses)
+        {
+            c.Initialize();
+        }
+
     }
 
     public void CreateZombie(Corpse corpse)
@@ -54,6 +60,7 @@ public class GameplayManager : MonoBehaviour
     {
         civilians.Remove(civilian);
         Corpse newCorpse = Instantiate(corpsePrefab, civilian.transform.position, Quaternion.identity);
+        newCorpse.Initialize();
         corpses.Add(newCorpse);
     }
     

@@ -2,9 +2,17 @@ using UnityEngine;
 
 public class Corpse : MonoBehaviour
 {
-    public float juiceValue;
-    public float requiredJuice = 100;
+    private float juiceValue;
+    private float requiredJuice = 100;
 
+    [SerializeField] private HealthMeter meter;
+
+    public void Initialize()
+    {
+        meter.Initialize();
+        meter.SetFill(0);
+    }
+    
     public void AddJuice()
     {
         juiceValue += 100 * Time.deltaTime;
@@ -12,8 +20,10 @@ public class Corpse : MonoBehaviour
         {
             Reanimate();
         }
+        meter.SetFill(juiceValue / requiredJuice);
     }
-    public void Reanimate()
+
+    private void Reanimate()
     {
         GameplayManager.instance.CreateZombie(this);
         this.gameObject.SetActive(false);
