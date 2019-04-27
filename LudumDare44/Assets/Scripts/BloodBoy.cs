@@ -6,6 +6,7 @@ public class BloodBoy : LifeForm
 {
     public static BloodBoy instance;
     private float speed = 4;
+    private float sprayRange = 2;
 
     public override void Initialize()
     {
@@ -20,6 +21,18 @@ public class BloodBoy : LifeForm
 
     public void Spray()
     {
+        foreach (Corpse corpse in GameplayManager.instance.corpses)
+        {
+            float dist = Vector3.Distance(transform.position, corpse.transform.position);
+            {
+                if (dist < sprayRange)
+                {
+                    corpse.AddJuice();
+                    return;
+                }
+            }
+        }
+        
         //sprayin!!
     }
 }

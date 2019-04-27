@@ -46,6 +46,7 @@ public class GameplayManager : MonoBehaviour
     {
         corpses.Remove(corpse);
         Zombie newZombie = Instantiate(zombiePrefab, corpse.transform.position, Quaternion.identity);
+        newZombie.Initialize();
         zombies.Add(newZombie);
     }
 

@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class Zombie : Unit
 {
-    private BloodBoy bloodBoy;
-
     private LifeForm target;
     private bool hasTarget;
 
     public override void Initialize()
     {
         base.Initialize();
-        bloodBoy = BloodBoy.instance;
     }
 
     void Update()
     {
-        Debug.Log(hasTarget);
         if (hasTarget)
         {
             if (target.isLiving)
@@ -32,7 +28,7 @@ public class Zombie : Unit
 
         if (AnyTargetInAggroRange()) return;
         
-        agent.SetDestination(bloodBoy.transform.position);            
+        agent.SetDestination(BloodBoy.instance.transform.position);            
         
     }
 
