@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,12 +14,13 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private BloodBoy bloodBoy;
 
     [SerializeField] private Zombie zombiePrefab;
-    [SerializeField] private Civilian civilianPrefab;
+    public Civilian civilianPrefab;
     [SerializeField] private Corpse corpsePrefab;
     
     public List<Zombie> zombies;
     public List<Civilian> civilians;
     public List<Corpse> corpses;
+    public List<CivilianSpawner> civilianSpawners;
     
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class GameplayManager : MonoBehaviour
         zombies = new List<Zombie>(FindObjectsOfType<Zombie>());
         civilians = new List<Civilian>(FindObjectsOfType<Civilian>());
         corpses = new List<Corpse>(FindObjectsOfType<Corpse>());
+        civilianSpawners = new List<CivilianSpawner>(FindObjectsOfType<CivilianSpawner>());
 
         foreach (Zombie zombie in zombies)
         {
@@ -44,6 +47,11 @@ public class GameplayManager : MonoBehaviour
         }
         
         foreach (Corpse c in corpses)
+        {
+            c.Initialize();
+        }
+
+        foreach (CivilianSpawner c in civilianSpawners)
         {
             c.Initialize();
         }
@@ -66,10 +74,23 @@ public class GameplayManager : MonoBehaviour
         corpses.Add(newCorpse);
     }
     
+    
+    public void CreateCivilian(CivilianSpawner spawner)
+    {
+        Vector3 spawnLocation = spawner.transform.position;
+        spawnLocation += Vector3.forward * Random.Range(-2, 2);
+        spawnLocation += Vector3.right * Random.Range(-2, 2);
+
+        Civilian newCivilian = Instantiate(civilianPrefab, spawnLocation, Quaternion.identity);
+        newCivilian.Initialize();
+        civilians.Add(newCivilian);
+    }
+    
     void Update()
     {
         inputManager.Refresh();
         cameraController.Refresh();
         hud.Refresh();
     }
+
 }

@@ -7,9 +7,17 @@ public class Zombie : Unit
     private LifeForm target;
     private bool hasTarget;
 
+    private float baseSpeed;
+    private float currentSpeed;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        baseSpeed = agent.speed;
+        currentSpeed = baseSpeed;
+
+        aggroRange = 6;
     }
 
     void Update()
@@ -28,8 +36,9 @@ public class Zombie : Unit
 
         if (AnyTargetInAggroRange()) return;
         
-        agent.SetDestination(BloodBoy.instance.transform.position);            
-        
+        agent.SetDestination(BloodBoy.instance.transform.position);
+        currentSpeed = baseSpeed;
+
     }
 
     private void EvaluateFocus()
@@ -40,7 +49,8 @@ public class Zombie : Unit
 
         if (dist < aggroRange)
         {
-            agent.SetDestination(target.transform.position);                        
+            agent.SetDestination(target.transform.position); 
+            currentSpeed = baseSpeed * 2;
         }
         else
         {
