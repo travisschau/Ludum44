@@ -25,10 +25,9 @@ public class LifeForm : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         isLiving = false;
-        Debug.Log("Dead");
     }
       
 }

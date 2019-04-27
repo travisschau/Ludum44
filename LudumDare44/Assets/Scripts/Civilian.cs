@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class Civilian : Unit
 {
-    // Update is called once per frame
+    protected override void Die()
+    {
+        base.Die();
+        GameplayManager.instance.CreateCorpse(this);
+        this.gameObject.SetActive(false);
+    }
 }
