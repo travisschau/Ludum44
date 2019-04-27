@@ -4,9 +4,12 @@ using UnityEngine.UI;
 
 public class Unit : LifeForm
 {
-    public float dmg = 100;
+    public float dmg = 30;
     public float aggroRange = 4;
     public float attackRange = 1;
+
+    public float attackCooldown = 0.3f;
+    protected float lastAttack;
 
     public HealthMeter healthMeter;
 
@@ -18,7 +21,11 @@ public class Unit : LifeForm
 
     protected void Attack(LifeForm target)
     {
-        target.TakeDamage(dmg);
+        if (Time.time - lastAttack > attackCooldown)
+        {
+            target.TakeDamage(dmg);
+            lastAttack = Time.time;
+        }
     }
 
     public override void TakeDamage(float dmgInflicted)
