@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Corpse : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class Corpse : MonoBehaviour
     public void Initialize()
     {
         meter.Initialize(0);
+        transform.localEulerAngles = Vector3.up * Random.Range(0, 360);
     }
     
     public void AddJuice(float juice)

@@ -17,8 +17,8 @@ public class GameplayManager : MonoBehaviour
     public Civilian civilianPrefab;
     [SerializeField] private Corpse corpsePrefab;
     
-    public List<Zombie> zombies;
-    public List<Civilian> civilians;
+    public List<Unit> zombies;
+    public List<Unit> civilians;
     public List<Corpse> corpses;
     public List<CivilianSpawner> civilianSpawners;
     
@@ -31,8 +31,8 @@ public class GameplayManager : MonoBehaviour
         bloodBoy.Initialize();
         cameraController.Initialize();
 
-        zombies = new List<Zombie>(FindObjectsOfType<Zombie>());
-        civilians = new List<Civilian>(FindObjectsOfType<Civilian>());
+        zombies = new List<Unit>(FindObjectsOfType<Zombie>());
+        civilians = new List<Unit>(FindObjectsOfType<Civilian>());
         corpses = new List<Corpse>(FindObjectsOfType<Corpse>());
         civilianSpawners = new List<CivilianSpawner>(FindObjectsOfType<CivilianSpawner>());
 
@@ -72,6 +72,11 @@ public class GameplayManager : MonoBehaviour
         Corpse newCorpse = Instantiate(corpsePrefab, civilian.transform.position, Quaternion.identity);
         newCorpse.Initialize();
         corpses.Add(newCorpse);
+    }
+
+    public void RemoveZombie(Zombie z)
+    {
+        zombies.Remove(z);
     }
     
     

@@ -141,11 +141,13 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 0
   isLiving: 0
-  dmg: 10
+  dmg: 8
   aggroRange: 4
-  attackRange: 1
+  attackRange: 1.4
   attackCooldown: 0.3
   healthMeter: {fileID: 822792546171680366}
+  zombiePrefab: {fileID: 4564250172593957715, guid: 95a41a07650b2944680e7d6f5efd285b,
+    type: 3}
 --- !u!195 &1305891756343218486
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,10 +157,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 1305891756343218480}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 40
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1

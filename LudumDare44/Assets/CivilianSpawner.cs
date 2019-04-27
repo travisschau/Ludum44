@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CivilianSpawner : MonoBehaviour
 {
-    private const float MinDist = 20;
-    private const float MaxDist = 60;
+    private const float MinDist = 15;
+    private const float MaxDist = 50;
 
     private const float MinSpawn = 1;
     private const float MaxSpawn = 10;

@@ -1,100 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Zombie : Unit
 {
-    private LifeForm target;
-    private bool hasTarget;
-
-    private float baseSpeed;
-    private float currentSpeed;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        baseSpeed = agent.speed;
-        currentSpeed = baseSpeed;
-
         aggroRange = 6;
+        targetGroup = GameplayManager.instance.civilians;
+        TweenAlive();
     }
 
-    void Update()
+    private void TweenAlive()
     {
-        if (hasTarget)
-        {
-            if (target.isLiving)
-            {
-                EvaluateFocus();
-                return;                
-            }
+        transform.localScale = new Vector3(1, 0.4f, 1);
+        transform.DOScaleY(1, 0.3f).SetEase(Ease.OutBack);
+    }
 
-            hasTarget = false;
-            target = null;
-        }
-
-        if (AnyTargetInAggroRange()) return;
-        
+    protected override void DefaultMovement()
+    {
         agent.SetDestination(BloodBoy.instance.transform.position);
         currentSpeed = baseSpeed;
-
     }
-
-    private void EvaluateFocus()
+    
+    protected override void Die()
     {
-        float dist = Vector3.Distance(transform.position, target.transform.position);
-
-        if (AnyTargetInAttackRange()) return;
-
-        if (dist < aggroRange)
-        {
-            agent.SetDestination(target.transform.position); 
-            currentSpeed = baseSpeed * 2;
-        }
-        else
-        {
-            hasTarget = false;
-        }
+        base.Die();
+        GameplayManager.instance.RemoveZombie(this);
+        this.gameObject.SetActive(false);
     }
 
-    private bool AnyTargetInAggroRange()
-    {
-        foreach (Civilian civilian in GameplayManager.instance.civilians)
-        {
-            if (!civilian.isLiving) continue;
-            float dist = Vector3.Distance(transform.position, civilian.transform.position);
-            if (dist < aggroRange)
-            {
-                hasTarget = true;
-                target = civilian;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool AnyTargetInAttackRange()
-    {
-        foreach (Civilian civilian in GameplayManager.instance.civilians)
-        {
-            if (!civilian.isLiving) continue;
-
-            float dist = Vector3.Distance(transform.position, civilian.transform.position);
-            if (dist < attackRange)
-            {
-                hasTarget = true;
-                target = civilian;
-                Attack(civilian);
-                if (civilian.currentHp <= 0)
-                {
-                    hasTarget = false;
-                    target = null;
-                }
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

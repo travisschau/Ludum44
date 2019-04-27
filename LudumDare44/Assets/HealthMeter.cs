@@ -35,6 +35,8 @@ public class HealthMeter : MonoBehaviour
     {
         if (isVisible)
         {
+            transform.eulerAngles = Vector3.zero;
+
             if (Time.time - lastUpdate > updateFade)
             {
                 FadeOff();

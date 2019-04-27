@@ -44,7 +44,8 @@ public class BloodBoy : LifeForm
 
     public void Move(Vector3 direction)
     {
-        agent.Move(direction * Time.deltaTime * speed);
+//        agent.Move(direction * Time.deltaTime * speed);
+        agent.SetDestination(transform.position + direction * 0.5f);
     }
 
     public void Spray()
