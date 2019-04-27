@@ -7,14 +7,16 @@ public class LifeForm : MonoBehaviour
     public float maxHp = 100;
     public float currentHp;
     private bool isEnemy;
+    public bool isLiving;
     
     public virtual void Initialize()
     {
+        isLiving = true;
         currentHp = maxHp;
         agent = GetComponent<NavMeshAgent>();
     }
 
-    protected void TakeDamage(float dmg)
+    public void TakeDamage(float dmg)
     {
         currentHp -= dmg;
         if (currentHp <= 0)
@@ -25,7 +27,8 @@ public class LifeForm : MonoBehaviour
 
     private void Die()
     {
-        
+        isLiving = false;
+        Debug.Log("Dead");
     }
       
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Civilian civilianPrefab;
     [SerializeField] private Corpse corpsePrefab;
     
-    private List<Zombie> _zombies;
-    private List<Civilian> _civilians;
+    public List<Zombie> zombies;
+    public List<Civilian> civilians;
     public List<Corpse> corpses;
     
     // Start is called before the first frame update
@@ -26,16 +27,16 @@ public class GameplayManager : MonoBehaviour
         bloodBoy.Initialize();
         cameraController.Initialize();
 
-        _zombies = new List<Zombie>(FindObjectsOfType<Zombie>());
-        _civilians = new List<Civilian>(FindObjectsOfType<Civilian>());
+        zombies = new List<Zombie>(FindObjectsOfType<Zombie>());
+        civilians = new List<Civilian>(FindObjectsOfType<Civilian>());
         corpses = new List<Corpse>(FindObjectsOfType<Corpse>());
 
-        foreach (Zombie zombie in _zombies)
+        foreach (Zombie zombie in zombies)
         {
             zombie.Initialize();
         }
         
-        foreach (Civilian civilian in _civilians)
+        foreach (Civilian civilian in civilians)
         {
             civilian.Initialize();
         }
@@ -45,10 +46,16 @@ public class GameplayManager : MonoBehaviour
     {
         corpses.Remove(corpse);
         Zombie newZombie = Instantiate(zombiePrefab, corpse.transform.position, Quaternion.identity);
-        _zombies.Add(newZombie);
-        
+        zombies.Add(newZombie);
     }
 
+    public void CreateCorpse(Civilian civilian)
+    {
+        civilians.Remove(civilian);
+        Corpse newCorpse = Instantiate(corpsePrefab, civilian.transform.position, Quaternion.identity);
+        corpses.Add(newCorpse);
+    }
+    
     void Update()
     {
         inputManager.Refresh();

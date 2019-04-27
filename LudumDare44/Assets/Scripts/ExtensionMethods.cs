@@ -1,4 +1,5 @@
-public class ExtensionMethods
+using System.Collections.Generic;
+
+public static class ExtensionMethods
 {
-    
 }
