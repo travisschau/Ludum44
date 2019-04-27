@@ -7,6 +7,7 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
 
+    [SerializeField] private Hud hud;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private BloodBoy bloodBoy;
@@ -24,6 +25,7 @@ public class GameplayManager : MonoBehaviour
     {
         instance = this;
         
+        hud.Initialize();
         bloodBoy.Initialize();
         cameraController.Initialize();
 
@@ -68,5 +70,6 @@ public class GameplayManager : MonoBehaviour
     {
         inputManager.Refresh();
         cameraController.Refresh();
+        hud.Refresh();
     }
 }

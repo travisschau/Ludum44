@@ -23,11 +23,12 @@ public class HealthMeter : MonoBehaviour
         lastUpdate = Time.time;
     }
 
-    public void Initialize()
+    public void Initialize(float defaultFill = 1)
     {
         lastUpdate = 0;
         canvasGroup.alpha = 0;
         gameObject.SetActive(false);
+        meterFill.fillAmount = defaultFill;
     }
 
     public void Update()

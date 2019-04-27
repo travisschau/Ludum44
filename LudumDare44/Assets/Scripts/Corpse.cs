@@ -3,19 +3,18 @@ using UnityEngine;
 public class Corpse : MonoBehaviour
 {
     private float juiceValue;
-    private float requiredJuice = 100;
+    private float requiredJuice = 4;
 
     [SerializeField] private HealthMeter meter;
 
     public void Initialize()
     {
-        meter.Initialize();
-        meter.SetFill(0);
+        meter.Initialize(0);
     }
     
-    public void AddJuice()
+    public void AddJuice(float juice)
     {
-        juiceValue += 100 * Time.deltaTime;
+        juiceValue += juice;
         if (juiceValue > requiredJuice)
         {
             Reanimate();

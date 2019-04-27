@@ -8,10 +8,38 @@ public class BloodBoy : LifeForm
     private float speed = 4;
     private float sprayRange = 2;
 
+    public float maxJuice = 200;
+    public float currentJuice;
+    private float lastDrip;
+    private float dripInterval = 1;
+    
+    public ParticleSystem dripVfx;
+
     public override void Initialize()
     {
         base.Initialize();
         instance = this;
+        currentJuice = maxJuice;
+    }
+
+    private void Update()
+    {
+        if (Time.time - lastDrip > dripInterval)
+        {
+            Drip();
+            lastDrip = Time.time;
+        }
+    }
+
+    private void Drip()
+    {
+        currentJuice -= 1;
+        dripVfx.Play();
+    }
+
+    public float GetJuicePercentage()
+    {
+        return currentJuice / maxJuice;
     }
 
     public void Move(Vector3 direction)
@@ -27,12 +55,12 @@ public class BloodBoy : LifeForm
             {
                 if (dist < sprayRange)
                 {
-                    corpse.AddJuice();
+                    float juiceSpray = 8 * Time.deltaTime;
+                    currentJuice -= juiceSpray;
+                    corpse.AddJuice(juiceSpray);
                     return;
                 }
             }
         }
-        
-        //sprayin!!
     }
 }

@@ -16,9 +16,9 @@ public class LifeForm : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    public void TakeDamage(float dmg)
+    public virtual void TakeDamage(float dmgInflicted)
     {
-        currentHp -= dmg;
+        currentHp -= dmgInflicted;
         if (currentHp <= 0)
         {
             Die();
