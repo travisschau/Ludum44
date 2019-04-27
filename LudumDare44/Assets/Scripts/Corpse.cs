@@ -7,6 +7,8 @@ public class Corpse : MonoBehaviour
     private float juiceValue;
     private float requiredJuice = 4;
 
+    public Zombie zombiePrefab;
+
     [SerializeField] private HealthMeter meter;
 
     public void Initialize()

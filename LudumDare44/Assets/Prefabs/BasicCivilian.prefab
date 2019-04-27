@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1305891756343218484}
   - component: {fileID: 1305891756343218486}
   m_Layer: 0
-  m_Name: Civilian
+  m_Name: BasicCivilian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   isLiving: 0
   dmg: 8
   aggroRange: 4
-  attackRange: 1.4
+  attackRange: 1.8
   attackCooldown: 0.3
   healthMeter: {fileID: 822792546171680366}
   zombiePrefab: {fileID: 4564250172593957715, guid: 95a41a07650b2944680e7d6f5efd285b,

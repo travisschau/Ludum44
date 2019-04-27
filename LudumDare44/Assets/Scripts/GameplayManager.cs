@@ -61,7 +61,7 @@ public class GameplayManager : MonoBehaviour
     public void CreateZombie(Corpse corpse)
     {
         corpses.Remove(corpse);
-        Zombie newZombie = Instantiate(zombiePrefab, corpse.transform.position, Quaternion.identity);
+        Zombie newZombie = Instantiate(corpse.zombiePrefab, corpse.transform.position, Quaternion.identity);
         newZombie.Initialize();
         zombies.Add(newZombie);
     }
@@ -70,6 +70,7 @@ public class GameplayManager : MonoBehaviour
     {
         civilians.Remove(civilian);
         Corpse newCorpse = Instantiate(corpsePrefab, civilian.transform.position, Quaternion.identity);
+        newCorpse.zombiePrefab = civilian.zombiePrefab;
         newCorpse.Initialize();
         corpses.Add(newCorpse);
     }
