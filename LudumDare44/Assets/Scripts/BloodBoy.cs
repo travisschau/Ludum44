@@ -13,14 +13,19 @@ public class BloodBoy : LifeForm
     private float lastDrip;
     private float dripInterval = 1;
     private float dripAmount = 5;
+
+    private bool isSpraying;
     
     public ParticleSystem dripVfx;
+    public ParticleSystem sprayVfx;
 
     public override void Initialize()
     {
         base.Initialize();
         instance = this;
         currentJuice = maxJuice;
+        
+        sprayVfx.Stop();
     }
 
     private void Update()
@@ -56,6 +61,8 @@ public class BloodBoy : LifeForm
             Unit u = GetClosestEnemy(GameplayManager.instance.zombies);
             u.TakeDamage(Time.deltaTime * 100);
             currentJuice += Time.deltaTime * 50;
+            transform.LookAt(u.transform);
+
 
         }
     }
@@ -88,12 +95,29 @@ public class BloodBoy : LifeForm
             {
                 if (dist < sprayRange)
                 {
-                    float juiceSpray = 8 * Time.deltaTime;
+                    if (!isSpraying)
+                    {
+                        sprayVfx.Play();
+                    }
+                    isSpraying = true;
+                    float juiceSpray = 12 * Time.deltaTime;
                     currentJuice -= juiceSpray;
                     corpse.AddJuice(juiceSpray);
+                    transform.LookAt(corpse.transform);
                     return;
+
                 }
             }
         }
     }
+
+    public void StopSpraying()
+    {
+        if (isSpraying)
+        {
+            isSpraying = false;
+            sprayVfx.Stop();
+        }
+    }
+    
 }

@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 public class Corpse : MonoBehaviour
 {
     private float juiceValue;
-    private float requiredJuice = 4;
+    private float requiredJuice = 8;
 
     public Zombie zombiePrefab;
 

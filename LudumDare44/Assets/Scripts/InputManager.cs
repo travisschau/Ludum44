@@ -28,6 +28,10 @@ public class InputManager : MonoBehaviour
         {
             BloodBoy.instance.Spray();
         }
+        else
+        {
+            BloodBoy.instance.StopSpraying();
+        }
 
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {

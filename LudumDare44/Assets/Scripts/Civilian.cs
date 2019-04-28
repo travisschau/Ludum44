@@ -10,6 +10,7 @@ public class Civilian : Unit
     {
         base.Initialize();
         targetGroup = GameplayManager.instance.zombies;
+        transform.eulerAngles = Vector3.up * Random.Range(0, 360);
     }
 
     protected override void Die()
