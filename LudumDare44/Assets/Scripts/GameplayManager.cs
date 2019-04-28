@@ -8,10 +8,12 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
 
+    [SerializeField] private SlideShow slideShow;
     [SerializeField] private Hud hud;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private BloodBoy bloodBoy;
+    [SerializeField] private GameOverDialog gameOverDialog;
 
     [SerializeField] private Zombie zombiePrefab;
     public Civilian civilianPrefab;
@@ -21,29 +23,36 @@ public class GameplayManager : MonoBehaviour
     public List<Unit> civilians;
     public List<Corpse> corpses;
     public List<CivilianSpawner> civilianSpawners;
+
+    public int largestArmy;
+    public int totalZombies;
+
+    public bool isPreGame = true;
     
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         
+        slideShow.Initialize();
         hud.Initialize();
         bloodBoy.Initialize();
         cameraController.Initialize();
+        gameOverDialog.Initialize();
 
         zombies = new List<Unit>(FindObjectsOfType<Zombie>());
         civilians = new List<Unit>(FindObjectsOfType<Civilian>());
         corpses = new List<Corpse>(FindObjectsOfType<Corpse>());
         civilianSpawners = new List<CivilianSpawner>(FindObjectsOfType<CivilianSpawner>());
 
-        foreach (Zombie zombie in zombies)
+        foreach (Unit u in zombies)
         {
-            zombie.Initialize();
+            u.Initialize();
         }
         
-        foreach (Civilian civilian in civilians)
+        foreach (Unit u in civilians)
         {
-            civilian.Initialize();
+            u.Initialize();
         }
         
         foreach (Corpse c in corpses)
@@ -56,6 +65,20 @@ public class GameplayManager : MonoBehaviour
             c.Initialize();
         }
 
+        slideShow.Show();
+    }
+
+    public void EndSlideShow()
+    {
+        isPreGame = false;
+    }
+
+    public void EvaluateGameOver()
+    {
+        if (BloodBoy.instance.currentJuice <= 0 || (zombies.Count == 0 && corpses.Count == 0))
+        {
+            GameOver();
+        }
     }
 
     public void CreateZombie(Corpse corpse)
@@ -64,6 +87,12 @@ public class GameplayManager : MonoBehaviour
         Zombie newZombie = Instantiate(corpse.zombiePrefab, corpse.transform.position, Quaternion.identity);
         newZombie.Initialize();
         zombies.Add(newZombie);
+
+        totalZombies++;
+        if (zombies.Count > largestArmy)
+        {
+            largestArmy = zombies.Count;
+        }
     }
 
     public void CreateCorpse(Civilian civilian)
@@ -79,7 +108,12 @@ public class GameplayManager : MonoBehaviour
     {
         zombies.Remove(z);
     }
-    
+
+    public void GameOver()
+    {
+        isPreGame = true;
+        gameOverDialog.Show();
+    }
     
     public void CreateCivilian(CivilianSpawner spawner)
     {
@@ -94,9 +128,11 @@ public class GameplayManager : MonoBehaviour
     
     void Update()
     {
+        if (isPreGame) return;
         inputManager.Refresh();
         cameraController.Refresh();
         hud.Refresh();
+        bloodBoy.Refresh();
     }
 
 }

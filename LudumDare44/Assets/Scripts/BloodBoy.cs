@@ -28,7 +28,7 @@ public class BloodBoy : LifeForm
         sprayVfx.Stop();
     }
 
-    private void Update()
+    public void Refresh()
     {
         if (Time.time - lastDrip > dripInterval)
         {
@@ -41,6 +41,7 @@ public class BloodBoy : LifeForm
     {
         currentJuice -= dripAmount;
         dripVfx.Play();
+        GameplayManager.instance.EvaluateGameOver();
     }
 
     public float GetJuicePercentage()
@@ -104,6 +105,7 @@ public class BloodBoy : LifeForm
                     currentJuice -= juiceSpray;
                     corpse.AddJuice(juiceSpray);
                     transform.LookAt(corpse.transform);
+                    GameplayManager.instance.EvaluateGameOver();
                     return;
                 }
             }
