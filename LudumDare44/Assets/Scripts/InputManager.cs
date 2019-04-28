@@ -29,6 +29,11 @@ public class InputManager : MonoBehaviour
             BloodBoy.instance.Spray();
         }
 
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            BloodBoy.instance.Cannibalize();
+        }
+
 
         if (movementVector != Vector3.zero)
         {

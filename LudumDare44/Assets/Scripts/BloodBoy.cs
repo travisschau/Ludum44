@@ -12,6 +12,7 @@ public class BloodBoy : LifeForm
     public float currentJuice;
     private float lastDrip;
     private float dripInterval = 1;
+    private float dripAmount = 5;
     
     public ParticleSystem dripVfx;
 
@@ -33,7 +34,7 @@ public class BloodBoy : LifeForm
 
     private void Drip()
     {
-        currentJuice -= 1;
+        currentJuice -= dripAmount;
         dripVfx.Play();
     }
 
@@ -47,6 +48,37 @@ public class BloodBoy : LifeForm
 //        agent.Move(direction * Time.deltaTime * speed);
         agent.SetDestination(transform.position + direction * 0.5f);
     }
+
+    public void Cannibalize()
+    {
+        if (GameplayManager.instance.zombies.Count > 0)
+        {
+            Unit u = GetClosestEnemy(GameplayManager.instance.zombies);
+            u.TakeDamage(Time.deltaTime * 100);
+            currentJuice += Time.deltaTime * 50;
+
+        }
+    }
+    
+    Unit GetClosestEnemy (List<Unit> units)
+    {
+        Unit bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach(Unit u in units)
+        {
+            Vector3 directionToTarget = u.transform.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if(dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = u;
+            }
+        }
+     
+        return bestTarget;
+    }
+
 
     public void Spray()
     {

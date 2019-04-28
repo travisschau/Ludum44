@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private float minFov = 30;
+    private float maxFov = 60;
+    private float maxArmy = 8;
     public void Initialize()
     {
         
@@ -13,5 +15,10 @@ public class CameraController : MonoBehaviour
     public void Refresh()
     {
         transform.position = BloodBoy.instance.transform.position;
+        float armySize = GameplayManager.instance.zombies.Count / maxArmy;
+        
+        float newFov = Mathf.Lerp(minFov, maxFov, armySize);
+        
+        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, newFov, Time.deltaTime);
     }
 }
