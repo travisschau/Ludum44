@@ -105,10 +105,10 @@ public class BloodBoy : LifeForm
                     corpse.AddJuice(juiceSpray);
                     transform.LookAt(corpse.transform);
                     return;
-
                 }
             }
         }
+        StopSpraying();
     }
 
     public void StopSpraying()
