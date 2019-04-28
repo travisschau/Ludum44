@@ -8,6 +8,7 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
 
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private SlideShow slideShow;
     [SerializeField] private Hud hud;
     [SerializeField] private InputManager inputManager;
@@ -68,12 +69,15 @@ public class GameplayManager : MonoBehaviour
         }
 
         slideShow.Show();
+        audioManager.PlayMenuMusic();
     }
 
     public void EndSlideShow()
     {
         isPreGame = false;
         hud.Show();
+        audioManager.PlayGameplayMusic();
+
     }
 
     public void EvaluateGameOver()
