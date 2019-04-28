@@ -18,6 +18,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Zombie zombiePrefab;
     public Civilian civilianPrefab;
     [SerializeField] private Corpse corpsePrefab;
+    [SerializeField] private ParticleSystem civilianDeathVfxPrefab;
+    [SerializeField] private ParticleSystem zombieDeathVfxPrefab;
     
     public List<Unit> zombies;
     public List<Unit> civilians;
@@ -98,6 +100,9 @@ public class GameplayManager : MonoBehaviour
 
     public void CreateCorpse(Civilian civilian)
     {
+        ParticleSystem deathVfx = Instantiate(civilianDeathVfxPrefab, civilian.transform.position, Quaternion.identity);
+        deathVfx.Play();
+        
         civilians.Remove(civilian);
         Corpse newCorpse = Instantiate(corpsePrefab, civilian.transform.position, Quaternion.identity);
         newCorpse.zombiePrefab = civilian.zombiePrefab;
@@ -107,6 +112,9 @@ public class GameplayManager : MonoBehaviour
 
     public void RemoveZombie(Zombie z)
     {
+        ParticleSystem deathVfx = Instantiate(zombieDeathVfxPrefab, z.transform.position, Quaternion.identity);
+        deathVfx.Play();
+
         zombies.Remove(z);
     }
 

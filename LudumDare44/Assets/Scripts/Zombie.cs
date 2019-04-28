@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Zombie : Unit
 {
+    private const float minPullDist = 1;
+    private const float maxPullDist = 8;
     public override void Initialize()
     {
         base.Initialize();
@@ -22,8 +24,17 @@ public class Zombie : Unit
 
     protected override void DefaultMovement()
     {
+        float dist = Vector3.Distance(transform.position, BloodBoy.instance.transform.position);
         agent.SetDestination(BloodBoy.instance.transform.position);
-        currentSpeed = baseSpeed;
+
+        float pull = (dist - minPullDist) / (maxPullDist - minPullDist);
+        float curSpeed = Mathf.Lerp(baseSpeed * 0.01f, baseSpeed * 2,
+            (dist - minPullDist) / (maxPullDist - minPullDist));
+
+        Debug.Log("Pull: " + pull + ", Curspeed: " + curSpeed);
+        currentSpeed = curSpeed;
+        agent.speed = currentSpeed;
+
     }
     
     protected override void Die()

@@ -80,6 +80,7 @@ public class Unit : LifeForm
         {
             agent.SetDestination(target.transform.position); 
             currentSpeed = baseSpeed * 2;
+            agent.speed = currentSpeed;
         }
         else
         {
