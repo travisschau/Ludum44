@@ -8,11 +8,11 @@ public class BloodBoy : LifeForm
     private float speed = 4;
     private float sprayRange = 2;
 
-    public float maxJuice = 200;
+    public float maxJuice = 300;
     public float currentJuice;
     private float lastDrip;
     private float dripInterval = 1;
-    private float dripAmount = 5;
+    private float dripAmount = 4;
 
     private bool isSpraying;
     

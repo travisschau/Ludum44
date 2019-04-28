@@ -71,6 +71,7 @@ public class GameplayManager : MonoBehaviour
     public void EndSlideShow()
     {
         isPreGame = false;
+        hud.Show();
     }
 
     public void EvaluateGameOver()

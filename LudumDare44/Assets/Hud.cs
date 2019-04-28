@@ -14,10 +14,17 @@ public class Hud : MonoBehaviour
     public void Initialize()
     {
         healthMeter.fillAmount = 1;
+        gameObject.SetActive(false);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
     }
 
     public void Refresh()
     {
         healthMeter.fillAmount = BloodBoy.instance.GetJuicePercentage();
+        counterHud.text = GameplayManager.instance.totalZombies.ToString();
     }
 }
