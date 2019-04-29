@@ -10,8 +10,14 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip gameplayMusic;
-    
+
+    public static AudioManager instance;
     // Start is called before the first frame update
+
+    public void Initialize()
+    {
+        instance = this;
+    }
     public void PlayMenuMusic()
     {
         musicSource.volume = 0;
@@ -19,6 +25,11 @@ public class AudioManager : MonoBehaviour
 
         musicSource.clip = menuMusic;
         musicSource.Play();
+    }
+
+    public void PlaySfxClip(AudioClip c)
+    {
+        sfxSource.PlayOneShot(c, 1);
     }
     
     public void PlayGameplayMusic()

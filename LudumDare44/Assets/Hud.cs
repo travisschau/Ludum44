@@ -9,6 +9,7 @@ public class Hud : MonoBehaviour
 {
     [SerializeField] private Image healthMeter;
     [SerializeField] private TextMeshProUGUI counterHud;
+    [SerializeField] private GameObject shiftPrompt;
     
     // Start is called before the first frame update
     public void Initialize()
@@ -26,5 +27,7 @@ public class Hud : MonoBehaviour
     {
         healthMeter.fillAmount = BloodBoy.instance.GetJuicePercentage();
         counterHud.text = GameplayManager.instance.totalZombies.ToString();
+
+        shiftPrompt.SetActive(healthMeter.fillAmount < 0.33f);
     }
 }

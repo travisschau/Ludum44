@@ -13,7 +13,7 @@ public class HealthMeter : MonoBehaviour
     private float lastUpdate;
     private float updateFade = 1;
 
-    private bool isVisible;
+    public bool isVisible;
     
     public void SetFill(float value)
     {

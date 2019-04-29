@@ -21,6 +21,9 @@ public class Unit : LifeForm
 
     protected float baseSpeed;
     protected float currentSpeed;
+    
+    [SerializeField] protected List<AudioClip> deathSfxClips = new List<AudioClip>();
+    [SerializeField] protected AudioSource sfxSource;
 
     public override void Initialize()
     {
@@ -30,7 +33,15 @@ public class Unit : LifeForm
         baseSpeed = agent.speed;
         currentSpeed = baseSpeed;
     }
-    
+
+    protected override void Die()
+    {
+        int index = Random.Range(0, deathSfxClips.Count - 1);
+
+        AudioManager.instance.PlaySfxClip(deathSfxClips[index]);
+        base.Die();
+    }
+
     protected virtual void DefaultMovement()
     {
     }

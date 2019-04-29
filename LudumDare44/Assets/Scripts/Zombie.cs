@@ -31,7 +31,6 @@ public class Zombie : Unit
         float curSpeed = Mathf.Lerp(baseSpeed * 0.01f, baseSpeed * 2,
             (dist - minPullDist) / (maxPullDist - minPullDist));
 
-        Debug.Log("Pull: " + pull + ", Curspeed: " + curSpeed);
         currentSpeed = curSpeed;
         agent.speed = currentSpeed;
 

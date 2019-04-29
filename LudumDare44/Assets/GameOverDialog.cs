@@ -9,7 +9,8 @@ public class GameOverDialog : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI totalZombiesText;
     [SerializeField] private TextMeshProUGUI largestArmyText;
-    
+
+    [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private GameObject dialog;
     [SerializeField] private GameObject continuePrompt;
 
@@ -22,9 +23,13 @@ public class GameOverDialog : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Show()
+    public void Show(bool success = false)
     {
-        totalZombiesText.text = GameplayManager.instance.totalZombies.ToString();
+        if (success)
+        {
+            title.text = "MISSION 1: COMPLETE";
+        }
+        totalZombiesText.text = GameplayManager.instance.totalZombies + " / " + GameplayManager.instance.totalCivilians;
         largestArmyText.text = GameplayManager.instance.largestArmy.ToString();
 
         gameObject.SetActive(true);

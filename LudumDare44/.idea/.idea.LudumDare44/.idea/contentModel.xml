@@ -38,6 +38,7 @@
         <e p="GameOverDialog.cs" t="Include" />
         <e p="HealthMeter.cs" t="Include" />
         <e p="Hud.cs" t="Include" />
+        <e p="MainMenu.cs" t="Include" />
         <e p="NavMesh" t="Include">
           <e p="Examples" t="Include">
             <e p="Editor" t="Include">

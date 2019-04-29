@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BloodBoy : LifeForm
 {
     public static BloodBoy instance;
     private float speed = 4;
-    private float sprayRange = 2;
+    private float sprayRange = 2.5f;
 
     public float maxJuice = 300;
     public float currentJuice;
@@ -18,6 +19,8 @@ public class BloodBoy : LifeForm
     
     public ParticleSystem dripVfx;
     public ParticleSystem sprayVfx;
+
+    [SerializeField] private AudioClip dripSfx;
 
     public override void Initialize()
     {
@@ -42,6 +45,7 @@ public class BloodBoy : LifeForm
         currentJuice -= dripAmount;
         dripVfx.Play();
         GameplayManager.instance.EvaluateGameOver();
+        AudioManager.instance.PlaySfxClip(dripSfx);
     }
 
     public float GetJuicePercentage()

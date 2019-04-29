@@ -69,10 +69,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1305891756343218484, guid: 4a9a51f5affb9044a897ce1f71068280,
         type: 3}
+      propertyPath: deathSfxClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305891756343218484, guid: 4a9a51f5affb9044a897ce1f71068280,
+        type: 3}
       propertyPath: zombiePrefab
       value: 
       objectReference: {fileID: 4155921645552176558, guid: b22987478f6118e4a933147a83229d0e,
         type: 3}
+    - target: {fileID: 1305891756343218484, guid: 4a9a51f5affb9044a897ce1f71068280,
+        type: 3}
+      propertyPath: deathSfxClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0eedfa6a205abe544aca70e444b19ec1, type: 3}
     - target: {fileID: 1305891756343218486, guid: 4a9a51f5affb9044a897ce1f71068280,
         type: 3}
       propertyPath: m_Radius

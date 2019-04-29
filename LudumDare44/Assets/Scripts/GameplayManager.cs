@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,6 +9,7 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
 
+    [SerializeField] private MainMenu mainMenu;
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private SlideShow slideShow;
     [SerializeField] private Hud hud;
@@ -29,25 +31,30 @@ public class GameplayManager : MonoBehaviour
 
     public int largestArmy;
     public int totalZombies;
+    public int totalCivilians;
 
     public bool isPreGame = true;
+    private bool winTriggered;
     
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        
+
+        mainMenu.Initialize();
         slideShow.Initialize();
         hud.Initialize();
         bloodBoy.Initialize();
         cameraController.Initialize();
         gameOverDialog.Initialize();
+        audioManager.Initialize();
 
         zombies = new List<Unit>(FindObjectsOfType<Zombie>());
         civilians = new List<Unit>(FindObjectsOfType<Civilian>());
         corpses = new List<Corpse>(FindObjectsOfType<Corpse>());
         civilianSpawners = new List<CivilianSpawner>(FindObjectsOfType<CivilianSpawner>());
 
+        totalCivilians = civilians.Count + 1;
         foreach (Unit u in zombies)
         {
             u.Initialize();
@@ -68,10 +75,21 @@ public class GameplayManager : MonoBehaviour
             c.Initialize();
         }
 
-        slideShow.Show();
+        mainMenu.Show();
         audioManager.PlayMenuMusic();
     }
 
+    public void ShowSlideShow()
+    {
+        slideShow.Show();
+    }
+
+    public void YouWin()
+    {
+        isPreGame = true;
+        gameOverDialog.Show(true);
+    }
+    
     public void EndSlideShow()
     {
         isPreGame = false;
@@ -146,6 +164,13 @@ public class GameplayManager : MonoBehaviour
         cameraController.Refresh();
         hud.Refresh();
         bloodBoy.Refresh();
+        
+        if (BloodBoy.instance.transform.position.x > 74 && !winTriggered)
+        {
+            winTriggered = true;
+            DOVirtual.DelayedCall(1f, YouWin);
+        }
+
     }
 
 }
